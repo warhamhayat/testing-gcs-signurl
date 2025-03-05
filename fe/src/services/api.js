@@ -43,8 +43,8 @@ const api = {
    */
   getFileSignedUrl: async (studentId) => {
     try {
-      const response = await axios.get(`${API_URL}/files/${studentId}`);
-      return response.data.signedUrl;
+      const response = await axios.get(`${API_URL}/students/files/${studentId}`);
+      return response.data.url;
     } catch (error) {
       console.error(`Error getting signed URL for student ${studentId}:`, error);
       throw error;

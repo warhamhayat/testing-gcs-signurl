@@ -6,6 +6,9 @@ const upload = require('../middleware/upload');
 // Get all students
 router.get('/', studentController.getAllStudents);
 
+// Get signed URL for student's file
+router.get('/files/:studentId', studentController.getFileSignedUrl);
+
 // Get student by ID
 router.get('/:id', studentController.getStudentById);
 
@@ -17,8 +20,5 @@ router.put('/:id', upload.single('file'), studentController.updateStudent);
 
 // Delete student
 router.delete('/:id', studentController.deleteStudent);
-
-// Get signed URL for student's file
-router.get('/:studentId/file', studentController.getFileSignedUrl);
 
 module.exports = router; 
