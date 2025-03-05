@@ -1,17 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
 import Dashboard from './pages/Dashboard';
 import './App.css';
 
-function App() {
+/**
+ * Komponen utama aplikasi
+ * @returns {React.ReactElement}
+ */
+const App = () => {
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-100">
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-        </Routes>
-      </div>
-    </Router>
+    <Dashboard />
   );
-}
+};
 
 export default App;

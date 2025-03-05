@@ -3,8 +3,14 @@ import config from '../config';
 
 const API_URL = config.apiUrl;
 
+/**
+ * Service untuk mengakses API
+ */
 const api = {
-  // Get all students
+  /**
+   * Mengambil semua data siswa
+   * @returns {Promise<Array>} - Array data siswa
+   */
   getStudents: async () => {
     try {
       const response = await axios.get(`${API_URL}/students`);
@@ -15,7 +21,11 @@ const api = {
     }
   },
   
-  // Get a single student
+  /**
+   * Mengambil data siswa berdasarkan ID
+   * @param {string} id - ID siswa
+   * @returns {Promise<Object>} - Data siswa
+   */
   getStudent: async (id) => {
     try {
       const response = await axios.get(`${API_URL}/students/${id}`);
@@ -26,7 +36,11 @@ const api = {
     }
   },
   
-  // Get signed URL for a file
+  /**
+   * Mengambil signed URL untuk file siswa
+   * @param {string} studentId - ID siswa
+   * @returns {Promise<string>} - Signed URL
+   */
   getFileSignedUrl: async (studentId) => {
     try {
       const response = await axios.get(`${API_URL}/files/${studentId}`);
@@ -37,7 +51,11 @@ const api = {
     }
   },
   
-  // Create a new student
+  /**
+   * Membuat data siswa baru
+   * @param {Object} studentData - Data siswa
+   * @returns {Promise<Object>} - Data siswa yang dibuat
+   */
   createStudent: async (studentData) => {
     try {
       const formData = new FormData();
@@ -66,7 +84,12 @@ const api = {
     }
   },
   
-  // Update a student
+  /**
+   * Memperbarui data siswa
+   * @param {string} id - ID siswa
+   * @param {Object} studentData - Data siswa
+   * @returns {Promise<Object>} - Data siswa yang diperbarui
+   */
   updateStudent: async (id, studentData) => {
     try {
       const formData = new FormData();
@@ -95,7 +118,11 @@ const api = {
     }
   },
   
-  // Delete a student
+  /**
+   * Menghapus data siswa
+   * @param {string} id - ID siswa
+   * @returns {Promise<Object>} - Response data
+   */
   deleteStudent: async (id) => {
     try {
       const response = await axios.delete(`${API_URL}/students/${id}`);
