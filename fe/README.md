@@ -1,137 +1,130 @@
-# Frontend Documentation
+# Frontend Aplikasi Manajemen Data Siswa
 
-## Overview
-This is the frontend application for the Bucket URL project, built with React and Vite. It provides a modern and responsive user interface for managing and accessing files stored in the backend.
+Frontend untuk aplikasi manajemen data siswa dengan React, Vite, dan Tailwind CSS.
 
-## Tech Stack
-- React 19
-- Vite
-- TailwindCSS
-- React Router DOM
-- Axios
+## Fitur
 
-## Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn package manager
+- Dashboard dengan tabel data siswa
+- Form untuk menambah dan mengedit data siswa
+- Upload file PDF
+- Pencarian data siswa
+- Akses file PDF melalui signed URL
 
-## Project Structure
+## Struktur Proyek
+
 ```
 fe/
-├── src/           # Source code
-├── public/        # Static assets
-├── index.html     # Entry HTML file
-├── vite.config.js # Vite configuration
-└── package.json   # Project dependencies
+├── node_modules/       # Dependensi
+├── public/             # Aset statis
+├── src/                # Kode sumber
+│   ├── components/     # Komponen React
+│   │   ├── Modal.jsx
+│   │   ├── StudentForm.jsx
+│   │   └── StudentTable.jsx
+│   ├── pages/          # Halaman
+│   │   └── Dashboard.jsx
+│   ├── services/       # Layanan API
+│   │   └── api.js
+│   ├── App.jsx         # Komponen utama
+│   ├── config.js       # Konfigurasi aplikasi
+│   ├── index.css       # Stylesheet global
+│   └── main.jsx        # Entry point
+├── .gitignore          # File yang diabaikan Git
+├── index.html          # File HTML utama
+├── package.json        # Konfigurasi proyek
+├── postcss.config.js   # Konfigurasi PostCSS
+├── tailwind.config.js  # Konfigurasi Tailwind CSS
+├── vite.config.js      # Konfigurasi Vite
+└── README.md           # Dokumentasi
 ```
 
-## Environment Variables
-Create a `.env` file in the root directory with:
-```
-VITE_API_URL=http://localhost:8000
-```
+## Teknologi
 
-## Installation
+- **React**: Library UI
+- **Vite**: Build tool dan dev server
+- **Tailwind CSS**: Framework CSS utility-first
+- **Axios**: Client HTTP
+- **React Router**: Routing
+- **React Icons**: Ikon
 
-1. Install dependencies:
-```bash
-npm install
-```
+## Komponen Utama
 
-2. Start development server:
-```bash
-npm run dev
-```
+### StudentTable
 
-## Available Scripts
-- `npm run dev`: Start development server
-- `npm run build`: Build for production
-- `npm run preview`: Preview production build
-- `npm run lint`: Run ESLint
+Komponen tabel yang menampilkan daftar siswa dengan fitur:
+- Menampilkan nama, kelas, nama orangtua, dan nilai
+- Tombol untuk melihat file PDF (menggunakan signed URL)
+- Tombol aksi (lihat detail, edit, hapus)
 
-## Dependencies
-### Main Dependencies
-- react: ^19.0.0
-- react-dom: ^19.0.0
-- react-router-dom: ^7.2.0
-- axios: ^1.8.1
-- react-icons: ^5.5.0
+### StudentForm
 
-### Dev Dependencies
-- vite: ^6.2.0
-- @vitejs/plugin-react: ^4.3.4
-- tailwindcss: ^3.3.5
-- postcss: ^8.4.31
-- autoprefixer: ^10.4.16
-- eslint: ^9.21.0
-- @types/react: ^19.0.10
-- @types/react-dom: ^19.0.4
+Form untuk menambah dan mengedit data siswa dengan validasi:
+- Nama siswa
+- Kelas
+- Nama orangtua
+- Nilai
+- Upload file PDF (opsional)
 
-## Features
-- Modern React with Hooks
-- Fast development with Vite
-- Type-safe development environment
-- Responsive design with TailwindCSS
-- Clean and maintainable code structure
-- ESLint configuration for code quality
+### Modal
 
-## Development
-To start the development server:
-```bash
-npm run dev
-```
-The application will be available at http://localhost:5173
+Komponen modal yang digunakan untuk:
+- Menampilkan form tambah/edit
+- Konfirmasi hapus data
 
-## Building for Production
-To create a production build:
-```bash
-npm run build
+## Layanan API
+
+Layanan API menggunakan Axios untuk berkomunikasi dengan backend:
+
+- `getStudents()`: Mendapatkan semua data siswa
+- `getStudent(id)`: Mendapatkan data siswa berdasarkan ID
+- `getFileSignedUrl(studentId)`: Mendapatkan signed URL untuk file
+- `createStudent(data)`: Membuat data siswa baru
+- `updateStudent(id, data)`: Memperbarui data siswa
+- `deleteStudent(id)`: Menghapus data siswa
+
+## Konfigurasi
+
+Konfigurasi aplikasi terdapat di file `src/config.js`:
+
+```javascript
+const config = {
+  // API URL
+  apiUrl: 'http://localhost:8000/api',
+  
+  // Storage configuration
+  storage: {
+    // Bucket name (for reference only)
+    bucketName: 'school22-bucket'
+  }
+};
 ```
 
-To preview the production build:
-```bash
-npm run preview
-```
+## Penggunaan
 
-## Code Style
-The project uses ESLint for code quality and consistency. To run the linter:
-```bash
-npm run lint
-```
+1. Instal dependensi:
+   ```
+   npm install
+   ```
 
-## Project Configuration
-### Vite
-The project uses Vite for fast development and optimized builds. Configuration can be found in `vite.config.js`.
+2. Jalankan server pengembangan:
+   ```
+   npm run dev
+   ```
 
-### TailwindCSS
-TailwindCSS is configured in `tailwind.config.js` and `postcss.config.js`.
+3. Build untuk produksi:
+   ```
+   npm run build
+   ```
 
-### ESLint
-ESLint configuration can be found in `eslint.config.js`.
+## Penanganan File
 
-## Browser Support
-The application supports all modern browsers:
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+- File PDF diupload melalui form multipart/form-data
+- File ditampilkan menggunakan signed URL yang diminta dari backend
+- Signed URL bersifat sementara (15 menit)
 
-## Contributing
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
+## Responsivitas
 
-## Best Practices
-- Use functional components and hooks
-- Follow React best practices
-- Write clean and maintainable code
-- Use proper TypeScript types
-- Follow the established project structure
-- Document your code when necessary
-
-## Troubleshooting
-Common issues and their solutions:
-1. If the dev server won't start, check if all dependencies are installed
-2. For build issues, ensure all environment variables are set correctly
-3. For type errors, ensure all necessary types are properly defined
+Aplikasi didesain responsif dengan Tailwind CSS:
+- Layout yang beradaptasi dengan ukuran layar
+- Tabel dengan overflow horizontal pada layar kecil
+- Form yang responsif
