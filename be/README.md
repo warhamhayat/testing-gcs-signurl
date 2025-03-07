@@ -1,114 +1,120 @@
-# Backend Aplikasi Manajemen Data Siswa
+# Backend Service Documentation
 
-Backend untuk aplikasi manajemen data siswa dengan Express.js, PostgreSQL, dan Google Cloud Storage.
+## Overview
+This is the backend service for the Bucket URL project, built with Node.js, Express.js, and Prisma ORM. It provides API endpoints for file management and uses Google Cloud Storage for file storage.
 
-## Fitur
+## Tech Stack
+- Node.js
+- Express.js
+- Prisma ORM
+- Google Cloud Storage
+- PostgreSQL (via Prisma)
 
-- RESTful API untuk manajemen data siswa
-- Integrasi dengan PostgreSQL menggunakan Prisma ORM
-- Upload file PDF ke Google Cloud Storage (private)
-- Generasi signed URL untuk akses file yang aman
+## Prerequisites
+- Node.js (v14 or higher)
+- PostgreSQL database
+- Google Cloud Storage account and credentials
+- npm or yarn package manager
 
-## Struktur Proyek
-
+## Project Structure
 ```
 be/
-├── node_modules/       # Dependensi
-├── prisma/             # Konfigurasi dan migrasi Prisma
-│   ├── migrations/     # Migrasi database
-│   └── schema.prisma   # Skema database
-├── credentials.json    # Kredensial Google Cloud Storage
-├── .env                # Variabel lingkungan
-├── package.json        # Konfigurasi proyek
-├── server.js           # File utama server
-└── README.md           # Dokumentasi
+├── prisma/         # Prisma schema and migrations
+├── src/            # Source code
+├── .env            # Environment variables
+├── credentials.json # Google Cloud credentials
+├── server.js       # Main application entry
+└── package.json    # Project dependencies
 ```
 
-## Teknologi
-
-- **Express.js**: Framework web untuk Node.js
-- **Prisma**: ORM untuk akses database
-- **PostgreSQL**: Database relasional
-- **Google Cloud Storage**: Penyimpanan file
-- **Multer**: Middleware untuk upload file
-- **dotenv**: Manajemen variabel lingkungan
-
-## Endpoint API
-
-### Siswa
-
-- `GET /api/students`: Mendapatkan semua data siswa
-- `GET /api/students/:id`: Mendapatkan data siswa berdasarkan ID
-- `POST /api/students`: Membuat data siswa baru (dengan/tanpa file)
-- `PUT /api/students/:id`: Memperbarui data siswa
-- `DELETE /api/students/:id`: Menghapus data siswa
-
-### File
-
-- `GET /api/files/:studentId`: Mendapatkan signed URL untuk file siswa (berlaku 15 menit)
-
-## Model Data
-
-### Student
-
-```prisma
-model Student {
-  id          Int      @id @default(autoincrement())
-  name        String
-  class       String
-  parentName  String
-  score       Float
-  fileUrl     String?  # Path file di bucket (files/nama-file.pdf)
-  fileName    String?
-  fileType    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
+## Environment Variables
+Create a `.env` file in the root directory with the following variables:
 ```
-
-## Konfigurasi
-
-Konfigurasi dilakukan melalui file `.env`:
-
-```
-# Database
-DATABASE_URL="postgresql://username:password@localhost:5432/student_db?schema=public"
-
-# Google Cloud Storage
-GCP_PROJECT_ID="your-project-id"
-GCP_BUCKET_NAME="your-bucket-name"
-GCP_KEYFILE_PATH="credentials.json"
-
-# Server
+DATABASE_URL="your-database-url"
 PORT=8000
+GOOGLE_CLOUD_PROJECT_ID="your-project-id"
+GOOGLE_CLOUD_BUCKET_NAME="your-bucket-name"
 ```
 
-## Penggunaan
+## Installation
 
-1. Instal dependensi:
-   ```
-   npm install
-   ```
+1. Install dependencies:
+```bash
+npm install
+```
 
-2. Jalankan migrasi database:
-   ```
-   npx prisma migrate dev
-   ```
+2. Generate Prisma client:
+```bash
+npm run prisma:generate
+```
 
-3. Jalankan server:
-   ```
-   npm run dev
-   ```
+3. Run database migrations:
+```bash
+npm run prisma:migrate
+```
 
-## Penanganan File
+## Available Scripts
+- `npm start`: Start the production server
+- `npm run dev`: Start development server with hot-reload
+- `npm run prisma:generate`: Generate Prisma client
+- `npm run prisma:migrate`: Run database migrations
 
-- File disimpan secara private di Google Cloud Storage
-- File disimpan dalam folder `files/` di bucket
-- Hanya path file yang disimpan di database, bukan URL lengkap
-- Akses file menggunakan signed URL yang berlaku 15 menit
+## Dependencies
+### Main Dependencies
+- @google-cloud/storage: ^7.15.2
+- @prisma/client: ^6.4.1
+- cors: ^2.8.5
+- dotenv: ^16.4.7
+- express: ^4.21.2
+- multer: ^1.4.5-lts.1
+- prisma: ^6.4.1
 
-## Catatan Keamanan
+### Dev Dependencies
+- nodemon: ^3.1.9
 
-- File tidak dapat diakses publik
-- Signed URL bersifat sementara (15 menit)
-- Kredensial GCP harus dijaga kerahasiaannya 
+## API Endpoints
+The service provides the following endpoints:
+- File Upload
+- File Download
+- File Management
+(Specific endpoint documentation should be added based on your implementation)
+
+## Google Cloud Storage Setup
+1. Create a Google Cloud project
+2. Enable Google Cloud Storage API
+3. Create a service account and download credentials
+4. Place the credentials.json file in the root directory
+5. Configure the bucket name in your .env file
+
+## Development
+To start the development server:
+```bash
+npm run dev
+```
+The server will start on http://localhost:8000 (or your specified PORT)
+
+## Production
+To start the production server:
+```bash
+npm start
+```
+
+## Error Handling
+The application includes error handling for:
+- File upload errors
+- Database connection issues
+- Invalid requests
+- Authentication errors
+
+## Security
+- Environment variables for sensitive data
+- Secure file upload handling
+- CORS configuration
+- Input validation
+
+## Contributing
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request 
